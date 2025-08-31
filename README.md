@@ -124,6 +124,10 @@ When contributing to this repository:
 3. Update relevant README files when adding new features
 4. Follow the existing template-based security patterns
 
+## Acknowledgments
+
+This repository is based on and inspired by the official [kobo-install](https://github.com/kobotoolbox/kobo-install) project. <mcreference link="https://github.com/kobotoolbox/kobo-install" index="0">0</mcreference> While kobo-install provides an automated installation script, this repository offers a more manual, Docker Compose-based approach with enhanced security features and template-based configuration management.
+
 ## License
 
 This deployment configuration is provided as-is for KoboToolbox deployments. Please refer to the official KoboToolbox project for software licensing terms.
