@@ -1,0 +1,19 @@
+sa-key.json
+
+# Exclude environment files with sensitive data (but keep .txt.example templates)
+kobo-env/envfiles/*.txt
+!kobo-env/envfiles/*.txt.example
+# Keep backup directory out of version control
+kobo-env/envfiles/backup/
+
+# GCS mount configuration - keep template, ignore actual config
+kobo-env/fstab
+!kobo-env/fstab.example
+
+# Ignore Enketo Express config but allow example
+kobo-env/enketo_express/config.json
+!kobo-env/enketo_express/config.json.example
+
+# Ignore PostgreSQL config but allow example
+kobo-env/postgres/conf/postgres.conf
+!kobo-env/postgres/conf/postgres.conf.example

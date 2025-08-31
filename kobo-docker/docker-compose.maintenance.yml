@@ -1,0 +1,22 @@
+# For public, HTTPS servers.
+
+services:
+
+  maintenance:
+    # set to match `docker-compose.frontend.yml` and avoid pulling different image
+    image: nginx:1.27
+    hostname: maintenance
+    env_file:
+      - ../kobo-env/envfiles/domains.txt
+    volumes:
+        - ./log/nginx:/var/log/nginx
+        - ./nginx/docker-entrypoint.d/30-init-maintenance-nginx.sh:/docker-entrypoint.d/30-init-kobo-nginx.sh
+        - ./nginx/kobo-docker-scripts:/kobo-docker-scripts
+        - ./nginx/maintenance:/www
+    restart: on-failure
+    networks:
+      - kobo-maintenance-network
+
+networks:
+  kobo-maintenance-network:
+    driver: bridge

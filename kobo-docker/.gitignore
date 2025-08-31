@@ -1,0 +1,15 @@
+.vols/
+log/
+backups/
+secrets/
+build
+docker-compose.yml
+.transifexrc
+.idea/*
+*.override.yml
+*.custom.yml
+start-env.sh
+stop-env.sh
+nginx/maintenance/index.html
+.uniqid
+.DS_Store

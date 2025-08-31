@@ -1,0 +1,55 @@
+#--------------------------------------------------------------------------------
+# MONGO
+#--------------------------------------------------------------------------------
+# These `KOBO_MONGO_` settings only affect the mongo container itself and the
+# `wait_for_mongo.bash` init script that runs within the kpi and kobocat.
+# Please see kobocat.txt to set container variables
+KOBO_MONGO_PORT=27017
+KOBO_MONGO_HOST=your-mongodb-host.mongodb.net
+MONGO_INITDB_ROOT_USERNAME=your_mongo_username
+MONGO_INITDB_ROOT_PASSWORD=your_mongo_password
+MONGO_INITDB_DATABASE=formhub
+KOBO_MONGO_USERNAME=your_mongo_username
+KOBO_MONGO_PASSWORD=your_mongo_password
+MONGO_DB_NAME=formhub
+MONGO_DB_URL=mongodb+srv://your_mongo_username:your_mongo_password@your-mongodb-host.mongodb.net/formhub?retryWrites=true&w=majority&appName=your-mongodb-cluster
+
+# Default MongoDB backup schedule is weekly at 01:00 AM UTC on Sunday.
+#MONGO_BACKUP_SCHEDULE=0 1 * * 0
+
+#--------------------------------------------------------------------------------
+# POSTGRES
+#--------------------------------------------------------------------------------
+
+# These `KOBO_POSTGRES_` settings only affect the postgres container itself and the
+# `wait_for_postgres.bash` init script that runs within the kpi and kobocat
+# containers. To control Django database connections, please see the
+# `DATABASE_URL` environment variable.
+POSTGRES_PORT=5432
+POSTGRES_HOST=your-postgres-host.com
+POSTGRES_USER=your_postgres_username
+POSTGRES_PASSWORD=your_postgres_password
+KC_POSTGRES_DB=kobocat
+KPI_POSTGRES_DB=koboform
+
+# Postgres database used by kpi and kobocat Django apps
+KC_DATABASE_URL=postgis://your_postgres_username:your_postgres_password@your-postgres-host.com:5432/kobocat
+KPI_DATABASE_URL=postgis://your_postgres_username:your_postgres_password@your-postgres-host.com:5432/koboform
+DATABASE_URL=postgis://your_postgres_username:your_postgres_password@your-postgres-host.com:5432/koboform
+
+# Default Postgres backup schedule is weekly at 02:00 AM UTC on Sunday.
+#POSTGRES_BACKUP_SCHEDULE=0 2 * * 0
+
+#--------------------------------------------------------------------------------
+# REDIS
+#--------------------------------------------------------------------------------
+
+# Default Redis backup schedule is weekly at 03:00 AM UTC on Sunday.
+#REDIS_BACKUP_SCHEDULE=0 3 * * 0
+
+REDIS_SESSION_URL=redis://:your_redis_password@your-redis-host.com:6380/2
+REDIS_PASSWORD=your_redis_password
+CACHE_URL=redis://:your_redis_password@your-redis-host.com:6380/5
+REDIS_CACHE_MAX_MEMORY=
+SERVICE_ACCOUNT_BACKEND_URL=redis://:your_redis_password@your-redis-host.com:6380/6
+ENKETO_REDIS_MAIN_URL=redis://:your_redis_password@your-redis-host.com:6379/0

@@ -1,0 +1,18 @@
+# Google Cloud Storage FUSE mount configuration for KoBo Docker Stack
+# Copy this file to 'fstab' and replace placeholder values with your actual bucket names
+
+# KoBoCAT media uploads bucket
+your-bucket-name_kobocat-media /path-to-mount/kobocat_media_uploads gcsfuse rw,allow_other,implicit_dirs,key_file=/path-to-sa-file/sa-key.json,uid=1000,gid=1000,file_mode=777,dir_mode=777,_netdev 0 0
+
+# KPI media bucket
+your-bucket-name_kpi-media /path-to-mount/kpi_media gcsfuse rw,allow_other,implicit_dirs,key_file=/path-to-sa-file/sa-key.json,uid=1000,gid=1000,file_mode=777,dir_mode=777,_netdev 0 0
+
+# Additional mount options explanation:
+# rw                    - Read/write access
+# allow_other          - Allow other users to access the mount
+# implicit_dirs        - Create directories implicitly
+# key_file             - Path to service account key file
+# uid=1000,gid=1000    - Set ownership to user/group ID 1000
+# file_mode=777        - File permissions
+# dir_mode=777         - Directory permissions
+# _netdev              - Network device (mount after network is available)

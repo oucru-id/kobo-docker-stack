@@ -1,0 +1,40 @@
+# Back-end containers
+
+services:
+  redis_main:
+    image: redis:7.2
+    env_file:
+      - ../kobo-env/envfiles/domains.txt
+      - ../kobo-env/envfiles/databases.txt
+      - ../kobo-env/envfiles/aws.txt
+    environment:
+      - KOBO_REDIS_SERVER_ROLE=main
+    volumes:
+      - ./redis:/kobo-docker-scripts
+      - ./backups/redis:/srv/backups
+      - ./.vols/redis_main_data/:/data/
+      - ./redis/redis-enketo-main.conf.tmpl:/etc/redis/redis.conf.tmpl:ro
+      - ./redis/entrypoint.sh:/tmp/redis/entrypoint.sh:ro
+      - ./log/redis_main:/var/log/redis
+    restart: always
+    stop_grace_period: 2m30s
+    sysctls:
+        - net.core.somaxconn=2048
+    command: "bash /tmp/redis/entrypoint.sh"
+
+  redis_cache:
+    image: redis:7.2
+    env_file:
+      - ../kobo-env/envfiles/databases.txt
+    environment:
+      - KOBO_REDIS_SERVER_ROLE=cache
+    volumes:
+      - ./.vols/redis_cache_data/:/data/
+      - ./redis/redis-enketo-cache.conf.tmpl:/etc/redis/redis.conf.tmpl:ro
+      - ./redis/entrypoint.sh:/tmp/redis/entrypoint.sh:ro
+      - ./log/redis_cache:/var/log/redis
+    restart: always
+    stop_grace_period: 2m30s
+    sysctls:
+        - net.core.somaxconn=2048
+    command: "bash /tmp/redis/entrypoint.sh"

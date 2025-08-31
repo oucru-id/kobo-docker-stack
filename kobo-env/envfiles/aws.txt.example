@@ -1,0 +1,33 @@
+####################
+# Account settings #
+####################
+
+# Replace with your AWS credentials
+#AWS_ACCESS_KEY_ID=your_access_key_here
+#AWS_SECRET_ACCESS_KEY=your_secret_key_here
+
+####################
+# Storage settings #
+####################
+
+# To use S3, the specified buckets must already exist and the owner of your `AWS_ACCESS_KEY_ID` must have the appropriate S3 permissions.
+
+#KOBOCAT_DEFAULT_FILE_STORAGE=storages.backends.s3boto3.S3Boto3Storage
+#KOBOCAT_AWS_STORAGE_BUCKET_NAME=your_kobocat_bucket_name
+
+#KPI_DEFAULT_FILE_STORAGE=storages.backends.s3boto3.S3Boto3Storage
+#KPI_AWS_STORAGE_BUCKET_NAME=your_kpi_bucket_name
+
+#AWS_S3_REGION_NAME=us-east-1
+
+###################
+# Backup settings #
+###################
+
+#BACKUP_AWS_STORAGE_BUCKET_NAME=your_backup_bucket_name
+#Backups files deletion is handled by bucket rules when True
+#AWS_BACKUP_BUCKET_DELETION_RULE_ENABLED=False
+#AWS_BACKUP_YEARLY_RETENTION=2
+#AWS_BACKUP_MONTHLY_RETENTION=12
+#AWS_BACKUP_WEEKLY_RETENTION=4
+#AWS_BACKUP_DAILY_RETENTION=30

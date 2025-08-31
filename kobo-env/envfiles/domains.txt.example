@@ -1,0 +1,13 @@
+# Choose between http or https
+PUBLIC_REQUEST_SCHEME=https
+# The publicly-accessible domain where your KoBo Toolbox instance will be reached (e.g. example.com).
+PUBLIC_DOMAIN_NAME=your-domain.com
+# The private domain used in docker network. Useful for communication between containers without passing through
+# a load balancer. No need to be resolved by a public DNS.
+INTERNAL_DOMAIN_NAME=your-domain.internal
+# The publicly-accessible subdomain for the KoBoForm form building and management interface (e.g. koboform).
+KOBOFORM_PUBLIC_SUBDOMAIN=kobo.your-domain
+# The publicly-accessible subdomain for the KoBoCAT data collection and project management interface (e.g.kobocat).
+KOBOCAT_PUBLIC_SUBDOMAIN=kobocat.your-domain
+# The publicly-accessible subdomain for the Enketo Express web forms (e.g. enketo).
+ENKETO_EXPRESS_PUBLIC_SUBDOMAIN=enketo.your-domain
