@@ -1,0 +1,2 @@
+spheres-lombok-barat_kobo_lombokbaratkab_go_id_kobocat-media /opt/kobo-docker/.vols/kobocat_media_uploads gcsfuse rw,allow_other,implicit_dirs,key_file=/opt/kobo-docker/sa-key.json,uid=1000,gid=1000,file_mode=777,dir_mode=777,_netdev 0 0
+spheres-lombok-barat_kobo_lombokbaratkab_go_id_kpi-media /opt/kobo-docker/.vols/kpi_media gcsfuse rw,allow_other,implicit_dirs,key_file=/opt/kobo-docker/sa-key.json,uid=1000,gid=1000,file_mode=777,dir_mode=777,_netdev 0 0

@@ -7,8 +7,6 @@ This directory contains environment configuration files for the KoBo Docker stac
 ```
 kobo-env/
 ├── README.md                 # This file
-├── fstab                     # Google Cloud Storage mount configuration
-├── fstab.example             # Template for GCS mount configuration
 ├── envfiles/                 # Environment files directory
 │   ├── *.txt.example        # Template files (committed to git)
 │   ├── *.txt                # Actual environment files (ignored by git)
@@ -16,6 +14,10 @@ kobo-env/
 ├── enketo_express/
 │   ├── config.json          # Enketo configuration (ignored by git)
 │   └── config.json.example  # Enketo configuration template
+├── etc/
+│   ├── fstab                # Google Cloud Storage mount configuration (ignored by git)
+│   ├── fstab.example        # Template for GCS mount configuration
+│   └── fuse.conf            # FUSE configuration for gcsfuse
 └── postgres/
     └── conf/
         ├── postgres.conf         # PostgreSQL configuration (ignored by git)
@@ -223,13 +225,24 @@ For new team members:
 
 ### GCSFuse Mount Configuration
 
-The `fstab` file contains mount configurations for Google Cloud Storage buckets using gcsfuse:
+The `etc/fstab` file contains mount configurations for Google Cloud Storage buckets using gcsfuse:
 
 ```bash
 # Example fstab entries for KoBo media storage
 spheeres-bucket_kobocat-media /opt/kobo-docker/.vols/kobocat_media_uploads gcsfuse rw,allow_other,implicit_dirs,key_file=/opt/kobo-docker/sa-key.json,uid=1000,gid=1000,file_mode=777,dir_mode=777,_netdev 0 0
 spheeres-bucket_kpi-media /opt/kobo-docker/.vols/kpi_media gcsfuse rw,allow_other,implicit_dirs,key_file=/opt/kobo-docker/sa-key.json,uid=1000,gid=1000,file_mode=777,dir_mode=777,_netdev 0 0
 ```
+
+### FUSE Configuration
+
+The `etc/fuse.conf` file enables the `user_allow_other` option required for gcsfuse mounts:
+
+```bash
+# Allow non-root users to specify the allow_other or allow_root mount options
+user_allow_other
+```
+
+This configuration must be copied to `/etc/fuse.conf` on your host system to allow gcsfuse mounts with the `allow_other` option.
 
 ### Prerequisites
 
@@ -261,8 +274,18 @@ spheeres-bucket_kpi-media /opt/kobo-docker/.vols/kpi_media gcsfuse rw,allow_othe
 
 To enable GCS mounts:
 
-1. **Update fstab**: Edit the `fstab` file with your bucket names
-2. **Mount filesystems**: Use the fstab entries to mount GCS buckets
+1. **Copy configuration files**: Copy the example files to create actual configuration
+   ```bash
+   cp etc/fstab.example etc/fstab
+   sudo cp etc/fuse.conf /etc/fuse.conf
+   ```
+
+2. **Update fstab**: Edit the `etc/fstab` file with your bucket names
+   ```bash
+   nano etc/fstab
+   ```
+
+3. **Mount filesystems**: Use the fstab entries to mount GCS buckets
    ```bash
    # Mount all entries from fstab
    sudo mount -a
