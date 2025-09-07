@@ -10,6 +10,22 @@ Before deploying, ensure you have completed the following setup steps:
 2. **Configure SSL Certificates**: Set up nginx-certbot in `../nginx-certbot/`. See the [nginx-certbot README](../nginx-certbot/README.md) for SSL configuration.
 3. **Mount Google Cloud Storage**: Ensure gcsfuse is mounted to volume locations before deploying the frontend stack (see [GCS Integration](../kobo-env/README.md#google-cloud-storage-integration)).
 
+## Domain Configuration
+
+**Important**: When updating domains, you must update the following configuration files in `../kobo-env/`:
+
+- `envfiles/domains.txt` - Update public and internal domain configurations
+- `envfiles/django.txt` - Update Django-related domain settings
+- `envfiles/databases.txt` - Update Redis domain configurations for public and internal/private access
+- `enketo_express/config.json` - Update Enketo Express domain settings
+
+**Additionally**, you must also update the Docker Compose files for domain changes:
+
+- `docker-compose.backend.yml` and `docker-compose.backend.override.yml` - Update backend service domain configurations for public/internal/private networks
+- `docker-compose.frontend.yml` and `docker-compose.frontend.override.yml` - Update frontend service domain configurations for public/internal/private networks
+
+After updating these files, you may need to restart the services and update network domains to ensure proper connectivity between services.
+
 ## First Time Deployment
 
 For initial deployment, follow these steps in order:

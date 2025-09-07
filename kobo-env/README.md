@@ -176,6 +176,66 @@ These files must be configured for KoBo to work properly:
 - **smtp.txt**: Email configuration (if sending emails)
 - **external_services.txt**: Third-party service integrations
 
+## Domain Updates
+
+When changing or updating domains for your KoBo deployment, you must update multiple configuration files to ensure proper connectivity between services:
+
+### Environment Files to Update
+
+1. **domains.txt** - Update all domain references:
+   - `KOBOFORM_PUBLIC_SUBDOMAIN` - Public-facing domain for KoBoForm
+   - `KOBOCAT_PUBLIC_SUBDOMAIN` - Public-facing domain for KoBoCat
+   - `ENKETO_EXPRESS_PUBLIC_SUBDOMAIN` - Public-facing domain for Enketo
+   - Internal domain configurations for service-to-service communication
+
+2. **django.txt** - Update Django-related domain settings:
+   - `DJANGO_ALLOWED_HOSTS` - Add new domains to allowed hosts
+   - `KOBOFORM_URL` and `KOBOCAT_URL` - Update service URLs
+   - CSRF and CORS domain configurations
+
+3. **databases.txt** - Update Redis domain configurations:
+   - Redis connection strings for public access
+   - Redis connection strings for internal/private service communication
+   - Cache backend URLs
+
+### Application Configuration Files to Update
+
+4. **enketo_express/config.json** - Update Enketo Express settings:
+   - Redis cache host (`redis.cache.host`) - Update Redis cache server domain
+   - Redis main host (`redis.main.host`) - Update Redis main server domain
+   - Enketo domain (`enketo.domain`) - Update the Enketo application domain
+
+### Docker Compose Files to Update
+
+Additionally, update the Docker Compose files in `../kobo-docker/`:
+
+- **docker-compose.backend.yml** and **docker-compose.backend.override.yml**
+  - Backend service domain configurations
+  - Network settings for public/internal/private access
+  - Environment variable overrides
+
+- **docker-compose.frontend.yml** and **docker-compose.frontend.override.yml**
+  - Frontend service domain configurations
+  - Proxy and routing configurations
+  - Public-facing service endpoints
+
+### Post-Update Steps
+
+1. **Restart services**: After updating configuration files, restart all services:
+   ```bash
+   cd ../kobo-docker
+   docker compose -f docker-compose.backend.yml -f docker-compose.backend.override.yml down
+   docker compose -f docker-compose.frontend.yml -f docker-compose.frontend.override.yml down
+   docker compose -f docker-compose.backend.yml -f docker-compose.backend.override.yml up -d
+   docker compose -f docker-compose.frontend.yml -f docker-compose.frontend.override.yml up -d
+   ```
+
+2. **Update network domains**: Ensure DNS records and network configurations are updated
+
+3. **Verify connectivity**: Test service-to-service communication and public access
+
+4. **Update SSL certificates**: If using new domains, update SSL certificates in `../nginx-certbot/`
+
 ## Security Notes
 
 - **Never commit `.txt` files** - They contain sensitive configuration data
